@@ -37,7 +37,7 @@ class WordOfDayCard extends ConsumerWidget {
                     children: [
                       IconButton(
                         icon: const Icon(Icons.volume_up_outlined),
-                        onPressed: () {}, // Play pronunciation
+                        onPressed: () => notifier.speak(wordOfDay.word),
                         constraints: const BoxConstraints(),
                         padding: EdgeInsets.zero,
                       ),
