@@ -40,28 +40,68 @@ class TranslateCard extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        state.sourceLanguage,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: state.sourceLanguage,
+                          icon: const Icon(Icons.arrow_drop_down, size: 18),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          items: const [
+                            DropdownMenuItem(value: 'EN', child: Text('EN')),
+                            DropdownMenuItem(value: 'FR', child: Text('FR')),
+                            DropdownMenuItem(value: 'ES', child: Text('ES')),
+                            DropdownMenuItem(value: 'DE', child: Text('DE')),
+                            DropdownMenuItem(value: 'IT', child: Text('IT')),
+                            DropdownMenuItem(value: 'AM', child: Text('AM')),
+                          ],
+                          onChanged: (val) {
+                            if (val != null) notifier.setSourceLanguage(val);
+                          },
+                        ),
                       ),
                       IconButton(
                         icon: const Icon(Icons.swap_horiz, color: Colors.blue),
                         onPressed: notifier.swapLanguages,
                       ),
-                      Text(
-                        state.targetLanguage,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: state.targetLanguage,
+                          icon: const Icon(Icons.arrow_drop_down, size: 18),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          items: const [
+                            DropdownMenuItem(value: 'EN', child: Text('EN')),
+                            DropdownMenuItem(value: 'FR', child: Text('FR')),
+                            DropdownMenuItem(value: 'ES', child: Text('ES')),
+                            DropdownMenuItem(value: 'DE', child: Text('DE')),
+                            DropdownMenuItem(value: 'IT', child: Text('IT')),
+                            DropdownMenuItem(value: 'AM', child: Text('AM')),
+                          ],
+                          onChanged: (val) {
+                            if (val != null) notifier.setTargetLanguage(val);
+                          },
+                        ),
                       ),
                     ],
                   ),
                   ElevatedButton(
-                    onPressed: notifier.translate,
+                    onPressed: state.isTranslating ? null : notifier.translate,
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    child: const Text('Translate'),
+                    child: state.isTranslating
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Text('Translate'),
                   ),
                 ],
               ),
